@@ -15,7 +15,7 @@ public class SpeedPowerUp extends GameEntity implements Interactable {
         setX(rnd.nextDouble() *Globals.WINDOW_WIDTH);
         setY(rnd.nextDouble() *Globals.WINDOW_HEIGHT);
     }
-    
+
     @Override
     public void apply(GameEntity entity) {
         if(entity instanceof SnakeHead) {
