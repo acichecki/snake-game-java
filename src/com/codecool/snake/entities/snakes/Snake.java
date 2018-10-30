@@ -57,7 +57,7 @@ public class Snake implements Animatable {
         health += diff;
     }
 
-    public void changeSpeed(double speedUp) { speed *= speedUp}
+    public void changeSpeed(double speedUp) { speed *= speedUp;}
 
     private void checkForGameOverConditions() {
         if (head.isOutOfBounds() || health <= 0) {
