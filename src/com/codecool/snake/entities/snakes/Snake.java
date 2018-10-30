@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCode;
 
 
 public class Snake implements Animatable {
-    private static float speed = 2;
+    private static float speed;
     private int health = 100;
 
     private SnakeHead head;
@@ -19,6 +19,7 @@ public class Snake implements Animatable {
 
 
     public Snake(Vec2d position) {
+        speed = 2;
         head = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
 
