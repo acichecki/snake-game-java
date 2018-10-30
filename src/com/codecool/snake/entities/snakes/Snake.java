@@ -57,6 +57,17 @@ public class Snake implements Animatable {
         health += diff;
     }
 
+    public void addHealth() {
+        for(int i = 0; i <= 10; i++) {
+            if(health <= 100) {
+                health ++;
+            }
+        }
+
+    }
+
+    public void restoreHealth() { health = 100;}
+
     public void changeSpeed(double speedUp) { speed *= speedUp;}
 
     private void checkForGameOverConditions() {
