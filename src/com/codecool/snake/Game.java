@@ -1,7 +1,7 @@
 package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.SimpleEnemy;
-import com.codecool.snake.entities.powerups.SimplePowerUp;
+import com.codecool.snake.entities.powerups.*;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
 
@@ -31,7 +31,11 @@ public class Game extends Pane {
     public void init() {
         spawnSnake();
         spawnEnemies(4);
-        spawnPowerUps(4);
+        spawnPowerUps(10);
+        spawnSpeedPowerUps(10);
+        spawnAddHealth(10);
+        spawnRestoreHealth(1);
+        spawnImmuneToEnemy(10);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
@@ -62,6 +66,15 @@ public class Game extends Pane {
     private void spawnPowerUps(int numberOfPowerUps) {
         for(int i = 0; i < numberOfPowerUps; ++i) new SimplePowerUp();
     }
+
+
+    private void spawnSpeedPowerUps(int numberOfSpeedUps) { for(int i = 0; i < numberOfSpeedUps; ++i) new SpeedPowerUp(); }
+
+    private void spawnAddHealth(int numberOfAddHealth) { for(int i = 0; i < numberOfAddHealth; ++i) new AddHealth(); }
+
+    private void spawnRestoreHealth(int numberOfRestoreHealth) { for(int i = 0; i < numberOfRestoreHealth; ++i) new RestoreHealth(); }
+
+    private void spawnImmuneToEnemy(int numberOfImmuneToEnemy) { for(int i = 0; i < numberOfImmuneToEnemy; ++i) new ImmuneToEnemy(); }
 
     private void setupInputHandling() {
         Scene scene = getScene();

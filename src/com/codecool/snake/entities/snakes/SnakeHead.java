@@ -5,7 +5,7 @@ import com.codecool.snake.Globals;
 import com.codecool.snake.Utils;
 import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.enemies.Enemy;
-import com.codecool.snake.entities.powerups.SimplePowerUp;
+import com.codecool.snake.entities.powerups.*;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
@@ -14,6 +14,7 @@ import javafx.geometry.Point2D;
 public class SnakeHead extends GameEntity implements Interactable {
     private static final float turnRate = 2;
     private Snake snake;
+    private boolean enemyDamage = true;
 
     public SnakeHead(Snake snake, Vec2d position) {
         this.snake = snake;
@@ -40,13 +41,33 @@ public class SnakeHead extends GameEntity implements Interactable {
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof Enemy){
-            System.out.println(getMessage());
-            snake.changeHealth(((Enemy) entity).getDamage());
+        if(entity instanceof Enemy && enemyDamage) {
+            if (enemyDamage == false) {
+                enemyDamage = true;
+            } else {
+                System.out.println(getMessage());
+                snake.changeHealth(((Enemy) entity).getDamage());
+            }
         }
-        if(entity instanceof SimplePowerUp){
+        if(entity instanceof SimplePowerUp) {
             System.out.println(getMessage());
             snake.addPart(4);
+        }
+        if(entity instanceof SpeedPowerUp) {
+            System.out.println(getMessage());
+            snake.changeSpeed(1.1);
+        }
+        if(entity instanceof AddHealth) {
+            System.out.println(getMessage());
+            snake.addHealth();
+        }
+        if(entity instanceof RestoreHealth) {
+            System.out.print(getMessage());
+            snake.restoreHealth();
+        }
+        if(entity instanceof ImmuneToEnemy) {
+            System.out.println(getMessage());
+            enemyDamage = false;
         }
     }
 
