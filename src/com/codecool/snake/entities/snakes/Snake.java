@@ -6,6 +6,7 @@ import com.codecool.snake.entities.Animatable;
 import com.codecool.snake.entities.GameEntity;
 import com.codecool.snake.eventhandler.InputHandler;
 
+import com.codecool.snake.gameResult.GameOverHandler;
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.input.KeyCode;
 
@@ -16,6 +17,8 @@ public class Snake implements Animatable {
 
     private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
+    private GameOverHandler gameOverHandler = new GameOverHandler();
+
 
 
     public Snake(Vec2d position) {
@@ -58,7 +61,7 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (head.isOutOfBounds() || health <= 0) {
+        if (gameOverHandler.isSnakeDead(health, head)) {
             System.out.println("Game Over");
             Globals.getInstance().stopGame();
         }
