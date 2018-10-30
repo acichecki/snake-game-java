@@ -14,6 +14,7 @@ import javafx.geometry.Point2D;
 public class SnakeHead extends GameEntity implements Interactable {
     private static final float turnRate = 2;
     private Snake snake;
+    private boolean enemyDamage = true;
 
     public SnakeHead(Snake snake, Vec2d position) {
         this.snake = snake;
@@ -40,9 +41,13 @@ public class SnakeHead extends GameEntity implements Interactable {
 
     @Override
     public void apply(GameEntity entity) {
-        if(entity instanceof Enemy){
-            System.out.println(getMessage());
-            snake.changeHealth(((Enemy) entity).getDamage());
+        if(entity instanceof Enemy && enemyDamage) {
+            if (enemyDamage == false) {
+                enemyDamage = true;
+            } else {
+                System.out.println(getMessage());
+                snake.changeHealth(((Enemy) entity).getDamage());
+            }
         }
         if(entity instanceof SimplePowerUp) {
             System.out.println(getMessage());
@@ -62,6 +67,7 @@ public class SnakeHead extends GameEntity implements Interactable {
         }
         if(entity instanceof ImmuneToEnemy) {
             System.out.println(getMessage());
+            enemyDamage = false;
         }
     }
 

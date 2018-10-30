@@ -31,10 +31,10 @@ public class Game extends Pane {
     public void init() {
         spawnSnake();
         spawnEnemies(4);
-        spawnPowerUps(4);
-        spawnSpeedPowerUps(70);
-        spawnAddHealth(8);
-        spawnRestoreHealth(9);
+        spawnPowerUps(10);
+        spawnSpeedPowerUps(10);
+        spawnAddHealth(10);
+        spawnRestoreHealth(1);
         spawnImmuneToEnemy(10);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
@@ -66,6 +66,7 @@ public class Game extends Pane {
     private void spawnPowerUps(int numberOfPowerUps) {
         for(int i = 0; i < numberOfPowerUps; ++i) new SimplePowerUp();
     }
+
 
     private void spawnSpeedPowerUps(int numberOfSpeedUps) { for(int i = 0; i < numberOfSpeedUps; ++i) new SpeedPowerUp(); }
 
