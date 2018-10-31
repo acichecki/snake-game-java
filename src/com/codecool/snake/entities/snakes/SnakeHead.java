@@ -10,6 +10,8 @@ import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.sun.javafx.geom.Vec2d;
 import javafx.geometry.Point2D;
 
+import javax.xml.bind.annotation.XmlElementDecl;
+
 
 public class SnakeHead extends GameEntity implements Interactable {
     private static final float turnRate = 2;
@@ -43,6 +45,7 @@ public class SnakeHead extends GameEntity implements Interactable {
         if(entity instanceof Enemy){
             System.out.println(getMessage());
             snake.changeHealth(((Enemy) entity).getDamage());
+            Globals.getInstance().game.updateHealthBar();
         }
         if(entity instanceof SimplePowerUp){
             System.out.println(getMessage());

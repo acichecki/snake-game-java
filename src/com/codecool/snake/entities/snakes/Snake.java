@@ -57,6 +57,8 @@ public class Snake implements Animatable {
         health += diff;
     }
 
+    public String getHealth() { return String.valueOf(health);}
+
     private void checkForGameOverConditions() {
         if (head.isOutOfBounds() || health <= 0) {
             System.out.println("Game Over");

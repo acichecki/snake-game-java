@@ -14,12 +14,13 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 
 public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
-
+    private Text text = new Text();
 
     public Game() {
         Globals.getInstance().game = this;
@@ -30,9 +31,10 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(4);
+        spawnEnemies(40);
         spawnPowerUps(4);
         getChildren().add(createMenu());
+        createHealthBar();
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
@@ -86,5 +88,17 @@ public class Game extends Pane {
 
         menuBar.getMenus().add(menu);
         return menuBar;
+    }
+
+    private void createHealthBar() {
+
+        text.setText("Health: " + snake.getHealth() + '%');
+        text.setX(0);
+        text.setY(50);
+        getChildren().add(text);
+    }
+
+    public void updateHealthBar() {
+        text.setText("Health: " + snake.getHealth() + '%');
     }
 }
