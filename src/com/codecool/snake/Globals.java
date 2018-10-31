@@ -3,6 +3,7 @@ package com.codecool.snake;
 import com.codecool.snake.resources.Resources;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import com.codecool.snake.entities.snakes.SnakeHead;
 
 // class for holding all static stuff
 public class Globals {
@@ -13,6 +14,7 @@ public class Globals {
 
     public Display display;
     public Game game;
+    public SnakeHead snakeHead;
 
     private GameLoop gameLoop;
     private Resources resources;

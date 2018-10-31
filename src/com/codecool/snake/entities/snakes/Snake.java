@@ -14,12 +14,11 @@ public class Snake implements Animatable {
     private static final float speed = 2;
     private int health = 100;
 
-    private SnakeHead head;
     private DelayedModificationList<GameEntity> body;
 
 
     public Snake(Vec2d position) {
-        head = new SnakeHead(this, position);
+        Globals.getInstance().snakeHead = new SnakeHead(this, position);
         body = new DelayedModificationList<>();
 
         addPart(4);
@@ -27,7 +26,7 @@ public class Snake implements Animatable {
 
     public void step() {
         SnakeControl turnDir = getUserInput();
-        head.updateRotation(turnDir, speed);
+        Globals.getInstance().snakeHead.updateRotation(turnDir, speed);
 
         updateSnakeBodyHistory();
         checkForGameOverConditions();
@@ -50,7 +49,7 @@ public class Snake implements Animatable {
             SnakeBody newBodyPart = new SnakeBody(position);
             body.add(newBodyPart);
         }
-        Globals.getInstance().display.updateSnakeHeadDrawPosition(head);
+        Globals.getInstance().display.updateSnakeHeadDrawPosition(Globals.getInstance().snakeHead);
     }
 
     public void changeHealth(int diff) {
@@ -58,14 +57,14 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (head.isOutOfBounds() || health <= 0) {
+        if (Globals.getInstance().snakeHead.isOutOfBounds() || health <= 0) {
             System.out.println("Game Over");
             Globals.getInstance().stopGame();
         }
     }
 
     private void updateSnakeBodyHistory() {
-        GameEntity prev = head;
+        GameEntity prev = Globals.getInstance().snakeHead;
         for(GameEntity currentPart : body.getList()) {
             currentPart.setPosition(prev.getPosition());
             prev = currentPart;
@@ -76,6 +75,6 @@ public class Snake implements Animatable {
         GameEntity result = body.getLast();
 
         if(result != null) return result;
-        return head;
+        return Globals.getInstance().snakeHead;
     }
 }
