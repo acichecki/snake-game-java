@@ -4,6 +4,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.security.Key;
+
 
 public class GameTimer {
     private static final double DEFAULT_60_FPS = 0.017;

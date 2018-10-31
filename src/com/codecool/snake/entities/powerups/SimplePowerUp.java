@@ -6,7 +6,6 @@ import com.codecool.snake.entities.Interactable;
 import com.codecool.snake.entities.snakes.SnakeHead;
 import java.util.Random;
 
-
 public class SimplePowerUp extends GameEntity implements Interactable {
     private static Random rnd = new Random();
 
@@ -29,4 +28,5 @@ public class SimplePowerUp extends GameEntity implements Interactable {
     public String getMessage() {
         return "Got power-up :)";
     }
+
 }

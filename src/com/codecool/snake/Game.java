@@ -5,6 +5,7 @@ import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
 
+import com.codecool.snake.resources.SpawnTimer;
 import com.sun.javafx.geom.Vec2d;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,10 +17,10 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 
-
 public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
+
 
 
     public Game() {
@@ -31,13 +32,14 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(4);
-        spawnPowerUps(4);
+        spawnEnemies(1);
+        spawnPowerUps(0);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
         gameTimer.play();
+        new SpawnTimer().run();
     }
 
     public void start() {
@@ -94,4 +96,7 @@ public class Game extends Pane {
         menuBar.getMenus().add(menu);
         return menuBar;
     }
+
+    private void sendMessage() { System.out.println("Message");}
+
 }
