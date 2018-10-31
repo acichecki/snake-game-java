@@ -13,7 +13,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.image.Image;
 
 
 public class Game extends Pane {
@@ -49,6 +50,12 @@ public class Game extends Pane {
         Globals.getInstance().getGameLoop().stop();
         init();
         start();
+    }
+
+    public void setBackground(Image backgroundImage) {
+
+        setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
 
     private void spawnSnake() {
