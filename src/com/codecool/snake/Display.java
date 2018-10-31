@@ -3,7 +3,9 @@ package com.codecool.snake;
 import com.codecool.snake.entities.GameEntity;
 import java.util.List;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 
 public class Display {
@@ -22,6 +24,14 @@ public class Display {
     public void remove(GameEntity entity) {
         displayPane.getChildren().remove(entity);
         gameObjects.remove(entity);
+    }
+
+    public void displayText(Text text) {
+        displayPane.getChildren().add(text);
+    }
+
+    public void displayButton(Button button){
+        displayPane.getChildren().add(button);
     }
 
     public List<GameEntity> getObjectList() {

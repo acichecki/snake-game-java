@@ -61,8 +61,9 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (gameOverHandler.isSnakeDead(health, head)) {
+        if (gameOverHandler.gameOverCheckCondition(health, head)) {
             System.out.println("Game Over");
+            gameOverHandler.displayGameOverMessage();
             Globals.getInstance().stopGame();
         }
     }
