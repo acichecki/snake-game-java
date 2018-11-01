@@ -4,8 +4,8 @@ import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
+import com.codecool.snake.entities.Spawner;
 
-import com.codecool.snake.resources.SpawnTimer;
 import com.sun.javafx.geom.Vec2d;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,12 +39,16 @@ public class Game extends Pane {
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
         gameTimer.play();
-        new SpawnTimer().run();
+        new Spawner(new SimpleEnemy(), 1, 1);
     }
 
     public void start() {
         setupInputHandling();
         Globals.getInstance().startGame();
+    }
+
+    public void spawn(Object object, int number) {
+        spawnEnemies(number);
     }
 
     public void restart() {
