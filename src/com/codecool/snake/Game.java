@@ -15,15 +15,19 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 
 public class Game extends Pane {
     private Snake snake = null;
+    private Snake snakeTwo = null;
     private GameTimer gameTimer = new GameTimer();
+    private boolean isSinglePlayerMode;
 
 
-    public Game() {
+    public Game(boolean isSinglePlayerMode) {
+        this.isSinglePlayerMode = isSinglePlayerMode;
         Globals.getInstance().game = this;
         Globals.getInstance().display = new Display(this);
         Globals.getInstance().setupResources();
@@ -33,13 +37,20 @@ public class Game extends Pane {
     public void init() {
         spawnSnake();
         spawnEnemies(0);
-        spawnPowerUps(0);
+        spawnPowerUps(20);
         //spawnBasias(5);
         spawnTadeuszes(5);
         getChildren().add(createMenu());
-        GameLoop gameLoop = new GameLoop(snake);
-        Globals.getInstance().setGameLoop(gameLoop);
-        gameTimer.setup(gameLoop::step);
+        if (isSinglePlayerMode) {
+            GameLoop gameLoop = new GameLoop(snake);
+            Globals.getInstance().setGameLoop(gameLoop);
+            gameTimer.setup(gameLoop::step);
+        } else {
+            spawnSnakeTwo();
+            GameLoop gameLoop = new GameLoop(snake, snakeTwo);
+            Globals.getInstance().setGameLoop(gameLoop);
+            gameTimer.setup(gameLoop::step);
+        }
         gameTimer.play();
     }
 
@@ -56,7 +67,11 @@ public class Game extends Pane {
     }
 
     private void spawnSnake() {
-        snake = new Snake(new Vec2d(500, 500));
+        snake = new Snake(new Vec2d(500, 500), KeyCode.A, KeyCode.D, "First");
+    }
+
+    private void spawnSnakeTwo() {
+        snakeTwo = new Snake(new Vec2d(200, 200), KeyCode.LEFT, KeyCode.RIGHT, "Second");
     }
 
     private void spawnEnemies(int numberOfEnemies) {

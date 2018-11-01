@@ -15,6 +15,7 @@ public class Globals {
     public Display display;
     public Game game;
     public SnakeHead snakeHead;
+    public SnakeHead snakeHeadTwo;
 
     private GameLoop gameLoop;
     private Resources resources;

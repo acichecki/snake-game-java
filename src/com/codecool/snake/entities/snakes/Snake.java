@@ -13,12 +13,23 @@ import javafx.scene.input.KeyCode;
 public class Snake implements Animatable {
     private static final float speed = 2;
     private int health = 100;
+    private KeyCode left;
+    private KeyCode right;
+    private String name;
 
     private DelayedModificationList<GameEntity> body;
 
 
-    public Snake(Vec2d position) {
-        Globals.getInstance().snakeHead = new SnakeHead(this, position);
+    public Snake(Vec2d position, KeyCode left, KeyCode right, String name) {
+        this.left = left;
+        this.right = right;
+        this.name = name;
+        if (this.name.equals("First")) {
+            Globals.getInstance().snakeHead = new SnakeHead(this, position);
+        }
+        if (this.name.equals("Second")) {
+            Globals.getInstance().snakeHeadTwo = new SnakeHead(this, position);
+        }
         body = new DelayedModificationList<>();
 
         addPart(4);
@@ -26,8 +37,12 @@ public class Snake implements Animatable {
 
     public void step() {
         SnakeControl turnDir = getUserInput();
-        Globals.getInstance().snakeHead.updateRotation(turnDir, speed);
-
+        if (this.name.equals("First")) {
+            Globals.getInstance().snakeHead.updateRotation(turnDir, speed);
+        }
+        if (this.name.equals("Second")) {
+            Globals.getInstance().snakeHeadTwo.updateRotation(turnDir, speed);
+        }
         updateSnakeBodyHistory();
         checkForGameOverConditions();
 
@@ -36,8 +51,8 @@ public class Snake implements Animatable {
 
     private SnakeControl getUserInput() {
         SnakeControl turnDir = SnakeControl.INVALID;
-        if(InputHandler.getInstance().isKeyPressed(KeyCode.LEFT)) turnDir = SnakeControl.TURN_LEFT;
-        if(InputHandler.getInstance().isKeyPressed(KeyCode.RIGHT)) turnDir = SnakeControl.TURN_RIGHT;
+        if(InputHandler.getInstance().isKeyPressed(this.left)) turnDir = SnakeControl.TURN_LEFT;
+        if(InputHandler.getInstance().isKeyPressed(this.right)) turnDir = SnakeControl.TURN_RIGHT;
         return turnDir;
     }
 
@@ -57,17 +72,35 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (Globals.getInstance().snakeHead.isOutOfBounds() || health <= 0) {
+        if (Globals.getInstance().snakeHead.isOutOfBounds() && Globals.getInstance().snakeHeadTwo.isOutOfBounds() || health <= 0) {
             System.out.println("Game Over");
             Globals.getInstance().stopGame();
+        }
+        if (Globals.getInstance().snakeHead.isOutOfBounds()) {
+            Globals.getInstance().snakeHead.destroy();
+        }
+        if (Globals.getInstance().snakeHeadTwo.isOutOfBounds()) {
+            Globals.getInstance().snakeHeadTwo.destroy();
+            for (GameEntity currentPart : body.getList()){
+                Globals.getInstance().display.remove(currentPart);
+            }
         }
     }
 
     private void updateSnakeBodyHistory() {
-        GameEntity prev = Globals.getInstance().snakeHead;
-        for(GameEntity currentPart : body.getList()) {
-            currentPart.setPosition(prev.getPosition());
-            prev = currentPart;
+        if (this.name.equals("First")) {
+            GameEntity prev = Globals.getInstance().snakeHead;
+            for (GameEntity currentPart : body.getList()) {
+                currentPart.setPosition(prev.getPosition());
+                prev = currentPart;
+            }
+        }
+        if (this.name.equals("Second")) {
+            GameEntity prev = Globals.getInstance().snakeHeadTwo;
+            for (GameEntity currentPart : body.getList()) {
+                currentPart.setPosition(prev.getPosition());
+                prev = currentPart;
+            }
         }
     }
 
@@ -75,6 +108,12 @@ public class Snake implements Animatable {
         GameEntity result = body.getLast();
 
         if(result != null) return result;
+        if (this.name.equals("First")) {
+            return Globals.getInstance().snakeHead;
+        }
+        if (this.name.equals("Second")) {
+            return Globals.getInstance().snakeHeadTwo;
+        }
         return Globals.getInstance().snakeHead;
     }
 }
