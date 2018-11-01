@@ -5,13 +5,11 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javafx.scene.layout.Pane;
-import javafx.scene.Node;
 
 public class Spawner {
-    public Spawner(Object object, double time, int number) {
+    public Spawner(String objectToSpawn, double time, int number) {
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(time), event -> {
-            Globals.getInstance().game.spawn(object, number);
+            Globals.getInstance().game.spawn(objectToSpawn, number);
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

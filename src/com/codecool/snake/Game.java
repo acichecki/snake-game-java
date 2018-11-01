@@ -39,7 +39,8 @@ public class Game extends Pane {
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
         gameTimer.play();
-        new Spawner(new SimpleEnemy(), 1, 1);
+        new Spawner("powerUp", 0.5, 5);
+        new Spawner("enemies", 1, 1);
     }
 
     public void start() {
@@ -47,8 +48,13 @@ public class Game extends Pane {
         Globals.getInstance().startGame();
     }
 
-    public void spawn(Object object, int number) {
-        spawnEnemies(number);
+    public void spawn(String objectToSpawn, int number) {
+        if (objectToSpawn.equals("powerUp")) {
+            spawnPowerUps(number);
+        }
+        if (objectToSpawn.equals("enemies")) {
+            spawnEnemies(number);
+        }
     }
 
     public void restart() {
