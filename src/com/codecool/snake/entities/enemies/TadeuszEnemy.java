@@ -10,7 +10,7 @@ import javafx.geometry.Point2D;
 
 import java.util.Random;
 
-public class BasiaEnemy extends Enemy implements Animatable, Interactable {
+public class TadeuszEnemy extends Enemy implements Animatable, Interactable {
     private Point2D heading;
     private int step = 0;
     private static Random rnd = new Random();
@@ -27,10 +27,10 @@ public class BasiaEnemy extends Enemy implements Animatable, Interactable {
         this.heading = heading;
     }
 
-    public BasiaEnemy() {
+    public TadeuszEnemy() {
         super(8);
 
-        setImage(Globals.getInstance().getImage("BasiaEnemy"));
+        setImage(Globals.getInstance().getImage("TadeuszEnemy"));
         double xCoord = 0;
         double yCoord = 0;
 
@@ -61,21 +61,36 @@ public class BasiaEnemy extends Enemy implements Animatable, Interactable {
     }
 
     public void run(double direction) {
-        double time = 0.5;
+        int speed = 2;
+        int time = 1;
         if (this.getStep() == 0) {
-            direction += 90;
             setRotate(direction);
-            new Move(this, time, direction, 1, 1);
+            new Move(this, 3, direction, 1, 1);
         }
         if (this.getStep() == 1) {
-            direction += 90;
+            direction -= 90;
             setRotate(direction);
-            new Move(this, time, direction, 2, 2);
+            new Move(this, 0.5, direction, speed, 2);
         }
         if (this.getStep() == 2) {
+            direction += 135;
+            setRotate(direction);
+            new Move(this, time, direction, speed, 3);
+        }
+        if (this.getStep() == 3) {
             direction += 90;
             setRotate(direction);
-            new Move(this, time, direction, 3, 0);
+            new Move(this, time, direction, speed, 4);
+        }
+        if (this.getStep() == 4) {
+            direction += 135;
+            setRotate(direction);
+            new Move(this, time, direction, speed, 5);
+        }
+        if (this.getStep() == 5) {
+            direction -= 90;
+            setRotate(direction);
+            new Move(this, 0.5, direction, speed, 0);
         }
     }
 

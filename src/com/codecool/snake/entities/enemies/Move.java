@@ -15,4 +15,13 @@ public class Move {
         timeline.setCycleCount(1);
         timeline.play();
     }
+    public Move(TadeuszEnemy object, double time, double direction, int speed, int step) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(time), event -> {
+            object.setHeading(Utils.directionToVector(direction, speed));
+            object.setStep(step);
+            object.run(direction);
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
 }

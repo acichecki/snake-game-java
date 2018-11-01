@@ -1,6 +1,7 @@
 package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.BasiaEnemy;
+import com.codecool.snake.entities.enemies.TadeuszEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
@@ -33,7 +34,8 @@ public class Game extends Pane {
         spawnSnake();
         spawnEnemies(0);
         spawnPowerUps(0);
-        spawnBasias(5);
+        //spawnBasias(5);
+        spawnTadeuszes(5);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
@@ -67,6 +69,10 @@ public class Game extends Pane {
 
     private void spawnBasias(int numberOfBasias) {
         for(int i = 0; i < numberOfBasias; ++i) new BasiaEnemy();
+    }
+
+    private void spawnTadeuszes(int numberOfTadeuszes) {
+        for(int i = 0; i < numberOfTadeuszes; ++i) new TadeuszEnemy();
     }
 
     private void setupInputHandling() {
