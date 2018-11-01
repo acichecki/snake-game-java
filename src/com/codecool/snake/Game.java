@@ -4,6 +4,7 @@ import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
+import com.codecool.snake.entities.Spawner;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.event.ActionEvent;
@@ -13,12 +14,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.layout.Pane;
-
+import javafx.scene.layout.*;
+import javafx.scene.image.Image;
 
 public class Game extends Pane {
     private Snake snake = null;
     private GameTimer gameTimer = new GameTimer();
+
 
 
     public Game() {
@@ -30,13 +32,15 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(4);
-        spawnPowerUps(4);
+        spawnEnemies(1);
+        spawnPowerUps(0);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
         gameTimer.setup(gameLoop::step);
         gameTimer.play();
+        new Spawner("powerUp", 0.5, 5);
+        new Spawner("enemies", 1, 1);
     }
 
     public void start() {
@@ -44,11 +48,26 @@ public class Game extends Pane {
         Globals.getInstance().startGame();
     }
 
+    public void spawn(String objectToSpawn, int number) {
+        if (objectToSpawn.equals("powerUp")) {
+            spawnPowerUps(number);
+        }
+        if (objectToSpawn.equals("enemies")) {
+            spawnEnemies(number);
+        }
+    }
+
     public void restart() {
         Globals.getInstance().display.clear();
         Globals.getInstance().getGameLoop().stop();
         init();
         start();
+    }
+
+    public void setBackground(Image backgroundImage) {
+
+        setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
 
     private void spawnSnake() {
@@ -87,4 +106,7 @@ public class Game extends Pane {
         menuBar.getMenus().add(menu);
         return menuBar;
     }
+
+    private void sendMessage() { System.out.println("Message");}
+
 }
