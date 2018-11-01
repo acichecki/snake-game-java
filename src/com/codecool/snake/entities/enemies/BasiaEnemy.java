@@ -11,9 +11,21 @@ import javafx.geometry.Point2D;
 import java.util.Random;
 
 public class BasiaEnemy extends Enemy implements Animatable, Interactable {
-
     private Point2D heading;
+    private int step = 0;
     private static Random rnd = new Random();
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    public void setHeading(Point2D heading) {
+        this.heading = heading;
+    }
 
     public BasiaEnemy() {
         super(15);
@@ -43,9 +55,27 @@ public class BasiaEnemy extends Enemy implements Animatable, Interactable {
 
         double direction = rnd.nextDouble() * 360;
         setRotate(direction);
-
         int speed = 1;
         heading = Utils.directionToVector(direction, speed);
+        this.run(direction);
+    }
+
+    public void run(double direction) {
+        if (this.getStep() == 0) {
+            direction += 90;
+            setRotate(direction);
+            new Move(this, 0.5, direction, 1, 1);
+        }
+        if (this.getStep() == 1) {
+            direction += 90;
+            setRotate(direction);
+            new Move(this, 0.5, direction, 2, 2);
+        }
+        if (this.getStep() == 2) {
+            direction += 90;
+            setRotate(direction);
+            new Move(this, 0.5, direction, 3, 0);
+        }
     }
 
     @Override

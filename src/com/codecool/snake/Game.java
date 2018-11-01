@@ -31,9 +31,9 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(4);
-        spawnPowerUps(4);
-        spawnBasias(30);
+        spawnEnemies(0);
+        spawnPowerUps(0);
+        spawnBasias(5);
         getChildren().add(createMenu());
         GameLoop gameLoop = new GameLoop(snake);
         Globals.getInstance().setGameLoop(gameLoop);
