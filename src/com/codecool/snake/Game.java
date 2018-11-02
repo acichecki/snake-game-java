@@ -36,9 +36,9 @@ public class Game extends Pane {
 
     public void init() {
         spawnSnake();
-        spawnEnemies(0);
+        spawnEnemies(5);
         spawnPowerUps(20);
-        //spawnBasias(5);
+        spawnBasias(5);
         spawnTadeuszes(5);
         getChildren().add(createMenu());
         if (isSinglePlayerMode) {
@@ -67,11 +67,11 @@ public class Game extends Pane {
     }
 
     private void spawnSnake() {
-        snake = new Snake(new Vec2d(500, 500), KeyCode.A, KeyCode.D, "First");
+        snake = new Snake(new Vec2d(850, 500), KeyCode.A, KeyCode.D, "First");
     }
 
     private void spawnSnakeTwo() {
-        snakeTwo = new Snake(new Vec2d(200, 200), KeyCode.LEFT, KeyCode.RIGHT, "Second");
+        snakeTwo = new Snake(new Vec2d(150, 500), KeyCode.LEFT, KeyCode.RIGHT, "Second");
     }
 
     private void spawnEnemies(int numberOfEnemies) {
@@ -101,14 +101,31 @@ public class Game extends Pane {
 
         Menu menu = new Menu("Menu");
 
-        MenuItem newItem = new MenuItem("Restart", null);
-        newItem.setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem restart = new MenuItem("Restart", null);
+        restart.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 restart();
             }
         });
-
-        menu.getItems().add(newItem);
+        MenuItem singleMode = new MenuItem("Single Player", null);
+        singleMode.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                isSinglePlayerMode = true;
+                restart();
+            }
+        });
+        MenuItem twoPlayersMode = new MenuItem("Two Players", null);
+        twoPlayersMode.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                isSinglePlayerMode = false;
+                restart();
+            }
+        });
+        menu.getItems().add(restart);
+        menu.getItems().add(new SeparatorMenuItem());
+        menu.getItems().add(singleMode);
+        menu.getItems().add(new SeparatorMenuItem());
+        menu.getItems().add(twoPlayersMode);
         menu.getItems().add(new SeparatorMenuItem());
 
         menuBar.getMenus().add(menu);
