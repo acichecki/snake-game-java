@@ -68,24 +68,31 @@ public class Snake implements Animatable {
     }
 
     private void checkForGameOverConditions() {
-        if (Globals.getInstance().snakeHead.isOutOfBounds() && Globals.getInstance().snakeHeadTwo.isOutOfBounds() || health <= 0) {
-            System.out.println("Game Over");
-            Globals.getInstance().stopGame();
-        }
-        if (Globals.getInstance().snakeHead.isOutOfBounds()) {
-            Globals.getInstance().snakeHead.destroy();
-            for (GameEntity currentPart : this.body.getList()){
-                if (currentHead == Globals.getInstance().snakeHead) {
-                    Globals.getInstance().display.remove(currentPart);
+        if (Globals.getInstance().snakeHeadTwo != null) {
+            if (Globals.getInstance().snakeHead.isOutOfBounds() && Globals.getInstance().snakeHeadTwo.isOutOfBounds() || health <= 0) {
+                System.out.println("Game Over");
+                Globals.getInstance().stopGame();
+            }
+            if (Globals.getInstance().snakeHead.isOutOfBounds()) {
+                Globals.getInstance().snakeHead.destroy();
+                for (GameEntity currentPart : this.body.getList()) {
+                    if (currentHead == Globals.getInstance().snakeHead) {
+                        Globals.getInstance().display.remove(currentPart);
+                    }
                 }
             }
-        }
-        if (Globals.getInstance().snakeHeadTwo.isOutOfBounds()) {
-            Globals.getInstance().snakeHeadTwo.destroy();
-            for (GameEntity currentPart : this.body.getList()){
-                if (currentHead == Globals.getInstance().snakeHeadTwo) {
-                    Globals.getInstance().display.remove(currentPart);
+            if (Globals.getInstance().snakeHeadTwo.isOutOfBounds()) {
+                Globals.getInstance().snakeHeadTwo.destroy();
+                for (GameEntity currentPart : this.body.getList()) {
+                    if (currentHead == Globals.getInstance().snakeHeadTwo) {
+                        Globals.getInstance().display.remove(currentPart);
+                    }
                 }
+            }
+        } else {
+            if (Globals.getInstance().snakeHead.isOutOfBounds() || health <= 0) {
+                System.out.println("Game Over");
+                Globals.getInstance().stopGame();
             }
         }
     }

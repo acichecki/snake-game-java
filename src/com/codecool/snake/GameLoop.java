@@ -30,7 +30,9 @@ public class GameLoop {
     public void step() {
         if(running) {
             snake.step();
-            snakeTwo.step();
+            if (snakeTwo != null) {
+                snakeTwo.step();
+            }
             for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
                 if (gameObject instanceof Animatable) {
                     ((Animatable) gameObject).step();
