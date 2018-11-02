@@ -32,6 +32,8 @@ public class GameLoop {
             snake.step();
             if (snakeTwo != null) {
                 snakeTwo.step();
+                snake.checkSnakesCollisions();
+                snakeTwo.checkSnakesCollisions();   
             }
             for (GameEntity gameObject : Globals.getInstance().display.getObjectList()) {
                 if (gameObject instanceof Animatable) {
@@ -39,8 +41,6 @@ public class GameLoop {
                 }
             }
             checkCollisions();
-            snake.checkSnakesCollisions();
-            snakeTwo.checkSnakesCollisions();
         }
 
         Globals.getInstance().display.frameFinished();
