@@ -39,6 +39,8 @@ public class GameLoop {
                 }
             }
             checkCollisions();
+            snake.checkSnakesCollisions();
+            snakeTwo.checkSnakesCollisions();
         }
 
         Globals.getInstance().display.frameFinished();

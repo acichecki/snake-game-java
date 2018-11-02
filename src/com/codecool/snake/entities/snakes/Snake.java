@@ -32,7 +32,7 @@ public class Snake implements Animatable {
         if (this.name.equals("Second")) {
             Globals.getInstance().snakeHeadTwo = currentHead;
         }
-        this.body = new DelayedModificationList<>();
+        body = new DelayedModificationList<>();
         addPart(4);
     }
 
@@ -42,7 +42,33 @@ public class Snake implements Animatable {
         updateSnakeBodyHistory();
         checkForGameOverConditions();
 
-        this.body.doPendingModifications();
+        body.doPendingModifications();
+    }
+
+    public void checkSnakesCollisions() {
+        for (GameEntity currentPart : body.getList()) {
+            SnakeHead otherHead = Globals.getInstance().snakeHead;
+            if (currentHead == Globals.getInstance().snakeHead) {
+                otherHead = Globals.getInstance().snakeHeadTwo;
+            } else if (currentHead == Globals.getInstance().snakeHeadTwo) {
+                otherHead = Globals.getInstance().snakeHead;
+            }
+            int rangeFromCentralPoint = 25;
+            double snakeHeadTwoXmin = Math.floor(otherHead.getX()) - rangeFromCentralPoint;
+            double snakeHeadTwoXmax = Math.floor(otherHead.getX()) + rangeFromCentralPoint;
+            double snakeHeadTwoYmin = Math.floor(otherHead.getY()) - rangeFromCentralPoint;
+            double snakeHeadTwoYmax = Math.floor(otherHead.getY()) + rangeFromCentralPoint;
+            if (snakeHeadTwoXmin <= Math.floor(currentPart.getX()) && Math.floor(currentPart.getX()) <= snakeHeadTwoXmax &&
+                    snakeHeadTwoYmin <= Math.floor(currentPart.getY()) && Math.floor(currentPart.getY()) <= snakeHeadTwoYmax) {
+                Globals.getInstance().display.remove(currentHead);
+                for (GameEntity allParts : body.getList()) {
+                    if (currentHead != otherHead) {
+                        Globals.getInstance().display.remove(allParts);
+                    }
+                }
+            }
+        }
+
     }
 
     private SnakeControl getUserInput() {
@@ -58,7 +84,7 @@ public class Snake implements Animatable {
 
         for (int i = 0; i < numParts; i++) {
             SnakeBody newBodyPart = new SnakeBody(position);
-            this.body.add(newBodyPart);
+            body.add(newBodyPart);
         }
         Globals.getInstance().display.updateSnakeHeadDrawPosition(Globals.getInstance().snakeHead);
     }
@@ -75,7 +101,7 @@ public class Snake implements Animatable {
             }
             if (Globals.getInstance().snakeHead.isOutOfBounds()) {
                 Globals.getInstance().snakeHead.destroy();
-                for (GameEntity currentPart : this.body.getList()) {
+                for (GameEntity currentPart : body.getList()) {
                     if (currentHead == Globals.getInstance().snakeHead) {
                         Globals.getInstance().display.remove(currentPart);
                     }
@@ -83,7 +109,7 @@ public class Snake implements Animatable {
             }
             if (Globals.getInstance().snakeHeadTwo.isOutOfBounds()) {
                 Globals.getInstance().snakeHeadTwo.destroy();
-                for (GameEntity currentPart : this.body.getList()) {
+                for (GameEntity currentPart : body.getList()) {
                     if (currentHead == Globals.getInstance().snakeHeadTwo) {
                         Globals.getInstance().display.remove(currentPart);
                     }
@@ -99,14 +125,14 @@ public class Snake implements Animatable {
 
     private void updateSnakeBodyHistory() {
         GameEntity prev = currentHead;
-        for (GameEntity currentPart : this.body.getList()) {
+        for (GameEntity currentPart : body.getList()) {
             currentPart.setPosition(prev.getPosition());
             prev = currentPart;
         }
     }
 
     private GameEntity getLastPart() {
-        GameEntity result = this.body.getLast();
+        GameEntity result = body.getLast();
 
         if(result != null) return result;
         return currentHead;
