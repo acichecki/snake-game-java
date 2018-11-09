@@ -62,20 +62,20 @@ public class BasiaEnemy extends Enemy implements Animatable, Interactable {
 
     public void run(double direction) {
         double time = 0.5;
-        if (this.getStep() == 0) {
-            direction += 90;
-            setRotate(direction);
-            new Move(this, time, direction, 1, 1);
-        }
-        if (this.getStep() == 1) {
-            direction += 90;
-            setRotate(direction);
-            new Move(this, time, direction, 2, 2);
-        }
-        if (this.getStep() == 2) {
-            direction += 90;
-            setRotate(direction);
-            new Move(this, time, direction, 3, 0);
+        int turnRight = 90;
+        switch (step) {
+            case 0:
+                direction += turnRight;
+                new Move(this, time, direction, 1, 1);
+                break;
+            case 1:
+                direction += turnRight;
+                new Move(this, time, direction, 2, 2);
+                break;
+            case 2:
+                direction += turnRight;
+                new Move(this, time, direction, 3, 0);
+                break;
         }
     }
 

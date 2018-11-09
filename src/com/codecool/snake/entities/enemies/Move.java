@@ -10,6 +10,7 @@ public class Move {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(time), event -> {
             object.setHeading(Utils.directionToVector(direction, speed));
             object.setStep(step);
+            object.setRotate(direction);
             object.run(direction);
         }));
         timeline.setCycleCount(1);
@@ -19,6 +20,7 @@ public class Move {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(time), event -> {
             object.setHeading(Utils.directionToVector(direction, speed));
             object.setStep(step);
+            object.setRotate(direction);
             object.run(direction);
         }));
         timeline.setCycleCount(1);
