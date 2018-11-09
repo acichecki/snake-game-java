@@ -1,11 +1,13 @@
 package com.codecool.snake;
 
 import com.codecool.snake.entities.enemies.BasiaEnemy;
+import com.codecool.snake.entities.enemies.Move;
 import com.codecool.snake.entities.enemies.TadeuszEnemy;
 import com.codecool.snake.entities.enemies.SimpleEnemy;
 import com.codecool.snake.entities.powerups.SimplePowerUp;
 import com.codecool.snake.entities.snakes.Snake;
 import com.codecool.snake.eventhandler.InputHandler;
+import com.codecool.snake.entities.Spawner;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.event.ActionEvent;
@@ -53,11 +55,32 @@ public class Game extends Pane {
             gameTimer.setup(gameLoop::step);
         }
         gameTimer.play();
+        new Spawner("BasiaEnemy", 5, 1);
+        new Spawner("TadeuszEnemy", 5, 1);
+        new Spawner("SimpleEnemy", 2, 1);
+        new Spawner("PowerUps", 3, 2);
     }
 
     public void start() {
         setupInputHandling();
         Globals.getInstance().startGame();
+    }
+
+    public void spawn(String object, int number) {
+        switch (object) {
+            case "BasiaEnemy":
+                spawnBasias(number);
+                break;
+            case "TadeuszEnemy":
+                spawnTadeuszes(number);
+                break;
+            case "SimpleEnemy":
+                spawnEnemies(number);
+                break;
+            case "PowerUps":
+                spawnPowerUps(number);
+                break;
+        }
     }
 
     public void restart() {
