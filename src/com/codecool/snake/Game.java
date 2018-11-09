@@ -17,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 
 public class Game extends Pane {
@@ -24,7 +25,7 @@ public class Game extends Pane {
     private Snake snakeTwo = null;
     private GameTimer gameTimer = new GameTimer();
     private boolean isSinglePlayerMode;
-
+    private Text text = new Text();
 
     public Game(boolean isSinglePlayerMode) {
         this.isSinglePlayerMode = isSinglePlayerMode;
@@ -130,5 +131,17 @@ public class Game extends Pane {
 
         menuBar.getMenus().add(menu);
         return menuBar;
+    }
+
+    private void createHealthBar() {
+
+        text.setText("Health: " + snake.getHealth() + '%');
+        text.setX(0);
+        text.setY(50);
+        getChildren().add(text);
+    }
+
+    public void updateHealthBar() {
+        text.setText("Health: " + snake.getHealth() + '%');
     }
 }
